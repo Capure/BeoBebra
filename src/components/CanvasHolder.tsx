@@ -14,7 +14,7 @@ export const CanvasHolder = function (props: any) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
         ctx.lineCap = "round";
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 4;
         ctx.strokeStyle = color;
         ctx.beginPath();
         ctx.moveTo(xStart, yStart);
@@ -23,6 +23,8 @@ export const CanvasHolder = function (props: any) {
       }
     }
   };
+  const drawDot = (x: number, y: number, color: string) =>
+    drawLine(x, y, x, y, color);
 
   const clearCanvas = () => {
     if (canvasRef.current !== null) {
@@ -35,11 +37,15 @@ export const CanvasHolder = function (props: any) {
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight - 150;
+      canvas.height = window.innerHeight;
     }
+    console.log(canvas!.width);
     props.onCanvasReady({
-      drawLine: drawLine,
-      clearCanvas: clearCanvas,
+      drawLine,
+      clearCanvas,
+      drawDot,
+      width: canvas!.width,
+      height: canvas!.height,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
